@@ -77,6 +77,7 @@ export default class Login extends React.Component {
     })
     .then((response) => response.json())
     .then((res) => {
+      alert(res.message)
       if (res.success === true) {
         AsyncStorage.setItem('user', res.user);
         this.props.navigation.navigate('Homescreen');
