@@ -1,13 +1,13 @@
 'use strict'
-
-const db = require('../server/db')
-const { User } = require('../server/db/models/user').default
+const { User, db } = require('../server/db/models/user')
 
 async function seed() {
-  await db.sync({force: true})
-  console.log('db synced!')
 
-  const users = await Promise.all([
+  try {
+    await db.sync({force: true})
+   console.log('db synced!')
+
+   const users = await Promise.all([
     User.create({
       firstName: 'Cody',
       email: 'cody@email.com',
@@ -31,6 +31,10 @@ async function seed() {
   ])
 
   console.log(`seeded ${users.length} users`)
+}
+  catch (error) {
+    console.log(error)
+  }
 }
 
 async function runSeed() {
