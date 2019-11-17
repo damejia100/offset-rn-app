@@ -4,7 +4,7 @@ const morgan = require('morgan')
 // const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const db = require('./db')
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 // const cors = cors = require('cors');
 const app = express()
 

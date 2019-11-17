@@ -36,7 +36,7 @@ export default class Login extends React.Component {
   }
   async login (user) {
     try {
-      const {data} = await axios.post('http://71.190.247.98:3000/api/user/', user)
+      const {data} = await axios.post('http://127.0.0.1:3000/api/user/', user)
       console.log('data returned from db>>>', data)
 
       // if (res.success === true) {
@@ -48,7 +48,7 @@ export default class Login extends React.Component {
       // }
 
     } catch (error) {
-      console.log('frontend login error>>>', error)
+      console.log('frontend login error>>>', error.message)
     }
 
     // fetch('http://71.190.247.98:3000/users', {
