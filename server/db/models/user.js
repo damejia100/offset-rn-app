@@ -1,14 +1,14 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
-// const pkg = require('./../../../package.json')
+const pkg = require('./../../../package.json')
 
-const db = new Sequelize(`postgres://localhost:5432/offset`,
+const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
+
+const db = new Sequelize(`postgres://localhost:5432/${databaseName}`,
   {
     logging: false
   }
 )
-
-// const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
 const User = db.define('user', {
   firstName: {

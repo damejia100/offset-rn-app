@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation-stack';
+import axios from 'axios'
 
 export default class Login extends React.Component {
 
@@ -18,22 +18,66 @@ export default class Login extends React.Component {
       email: '',
       password: ''
     }
+    this.login = this.login.bind(this)
+    this._loadingInitialState = this._loadingInitialState.bind(this)
   }
+
 
   componentDidMount() {
     this._loadingInitialState().done();
 
   }
 
-  _loadingInitialState = async () => {
-
+  async  _loadingInitialState () {
     const value = await AsyncStorage.getItem('user');
     if (value !== null) {
       this.props.navigation.navigate('Homescreen');
     }
-
   }
+  async login (user) {
+    try {
+      const {data} = await axios.post('http://71.190.247.98:3000/api/user/', user)
+      console.log('data returned from db>>>', data)
 
+      // if (res.success === true) {
+      //   AsyncStorage.setItem('user', res.user);
+      //   this.props.navigation.navigate('Homescreen');
+      // }
+      // else {
+      //   alert(res.message);
+      // }
+
+    } catch (error) {
+      console.log('frontend login error>>>', error)
+    }
+
+    // fetch('http://71.190.247.98:3000/users', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     email: this.state.email,
+    //     password: this.state.password
+    //   })
+    // })
+    // .then((response) => response.json())
+
+    // .then((res) => {
+
+    //   alert(res.message);
+
+    //   if (res.success === true) {
+    //     AsyncStorage.setItem('user', res.user);
+    //     this.props.navigation.navigate('Homescreen');
+    //   }
+    //   else {
+    //     alert(res.message);
+    //   }
+    // })
+    // .done();
+  }
   render() {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
@@ -53,7 +97,7 @@ export default class Login extends React.Component {
             onChangeText={ (password) => this.setState({password})}
             secureTextEntry={true}/>
 
-          <TouchableOpacity style={styles.button} onPress={this.login}>
+          <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state)}>
             <Text style={styles.btnText}>Sign In</Text>
           </TouchableOpacity>
 
@@ -61,32 +105,6 @@ export default class Login extends React.Component {
 
       </KeyboardAvoidingView>
     );
-  }
-  login = () => {
-
-    fetch('http://71.190.247.98:3000/users', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
-      })
-    })
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.success === true) {
-        AsyncStorage.setItem('user', res.user);
-        this.props.navigation.navigate('Homescreen');
-      }
-      else {
-        alert(res.message);
-      }
-    })
-    .done();
-
   }
 }
 

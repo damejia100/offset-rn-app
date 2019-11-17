@@ -1,28 +1,131 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  AsyncStorage
+} from 'react-native';
+import axios from 'axios'
 
 export default class SignUp extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: '',
+      email: '',
+      password: ''
+    }
+    this.signUp = this.signUp.bind(this)
+    this._loadingInitialState = this._loadingInitialState.bind(this)
+  }
+
+
+  componentDidMount() {
+    this._loadingInitialState().done();
+
+  }
+
+  async  _loadingInitialState () {
+    const value = await AsyncStorage.getItem('user');
+    if (value !== null) {
+      this.props.navigation.navigate('Homescreen');
+    }
+  }
+
+  async signUp (user) {
+    try {
+      const {data} = await axios.post('http://71.190.247.98:3000/api/user/', user)
+      this.setState({data})
+      console.log('data returned from db>>>', data)
+      // if (res.success === true) {
+      //   AsyncStorage.setItem('user', res.user);
+      //   this.props.navigation.navigate('Homescreen');
+      // }
+      // else {
+      //   alert(res.message);
+      // }
+
+    } catch (error) {
+      console.log('frontend login error>>>', error)
+    }
+
+    // fetch('http://71.190.247.98:3000/users', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     email: this.state.email,
+    //     password: this.state.password
+    //   })
+    // })
+    // .then((response) => response.json())
+
+    // .then((res) => {
+
+    //   alert(res.message);
+
+    //   if (res.success === true) {
+    //     AsyncStorage.setItem('user', res.user);
+    //     this.props.navigation.navigate('Homescreen');
+    //   }
+    //   else {
+    //     alert(res.message);
+    //   }
+    // })
+    // .done();
+  }
   render() {
     return (
-      <View style={styles.signUpForm}>
-        <Text style={styles.header}>Sign Up</Text>
+      <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
 
-        <TextInput style={styles.textInput} placeholder="First Name"/>
-        <TextInput style={styles.textInput} placeholder="Email"/>
-        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true}/>
+        <View style={styles.container}>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.btnText}>Sign Up</Text>
-        </TouchableOpacity>
+          <Text style={styles.header}> Sign Up </Text>
 
-      </View>
+            <TextInput
+            style={styles.textInput}
+            placeholder="First Name"
+            onChangeText={ (firstName) => this.setState({firstName})}/>
+
+            <TextInput
+            style={styles.textInput}
+            placeholder="Email"
+            onChangeText={ (email) => this.setState({email})}/>
+
+            <TextInput
+            style={styles.textInput}
+            placeholder="Password"
+            onChangeText={ (password) => this.setState({password})}
+            secureTextEntry={true}/>
+
+          <TouchableOpacity style={styles.button} onPress={()=>this.signUp(this.state)}>
+            <Text style={styles.btnText}>Sign In</Text>
+          </TouchableOpacity>
+
+        </View>
+
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  signUpForm: {
-    alignSelf: 'stretch'
+  wrapper: {
+    flex: 1
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00c4cc',
+    paddingLeft: 40,
+    paddingRight: 40
   },
   header: {
     fontSize: 40,
@@ -50,7 +153,6 @@ const styles = StyleSheet.create({
     borderRadius: 2
   },
   btnText: {
-    // fontWeight: 'bold',
     fontSize: 20
   }
-});
+})
