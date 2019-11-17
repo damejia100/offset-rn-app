@@ -10,11 +10,12 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Login from './app/components/Login';
 import SignUp from './app/components/SignUp';
-import HomeScreen from './app/components/Homescreen';
+import Homescreen from './app/components/Homescreen';
 
-const Application = createStackNavigator({
+const AppContainer = createAppContainer(AppNavigator)
+const AppNavigator = createStackNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: Homescreen,
   },
   Login: {
     screen: Login,
@@ -26,7 +27,7 @@ const Application = createStackNavigator({
 
 const bottomTabNavigator = createBottomTabNavigator(
   {
-  Home: HomeScreen,
+  Home: Homescreen,
   Login: Login,
   SignUp: SignUp
   },
@@ -34,41 +35,32 @@ const bottomTabNavigator = createBottomTabNavigator(
     initialRouteName: 'Home'
   }
 )
-export default createAppContainer(bottomTabNavigator);
-// export default createAppContainer(Application);
-// this was working for createStackNavigator()
 
 class App extends React.Component {
-
-  state= {
-    fontLoaded: false
-  }
-
-  async componentDidMount() {
-    // await Font.loadAsync({
-    //   'Exo-Medium': require('./assets/fonts/Exo-Medium.ttf'),
-    //   'Exo-Regualar': require('./assets/fonts/Exo-Regualar.ttf'),
-    //   'Ubuntu': require('./assets/fonts/Ubuntu.ttf')
-    // });
-    // this.setState({fontLoaded: true})
-  }
   render() {
-    return (
-      <Application />
-    );
+    return <AppContainer />;
   }
 }
 
-// <View style={styles.container}>
-      //   <SignUp />
-      // </View>
+export default createAppContainer(bottomTabNavigator);
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     backgroundColor: '#00c4cc',
-//     paddingLeft: 60,
-//     paddingRight: 60,
-//   },
-// });
+// class App extends React.Component {
+
+//   state= {
+//     fontLoaded: false
+//   }
+
+//   async componentDidMount() {
+//     // await Font.loadAsync({
+//     //   'Exo-Medium': require('./assets/fonts/Exo-Medium.ttf'),
+//     //   'Exo-Regualar': require('./assets/fonts/Exo-Regualar.ttf'),
+//     //   'Ubuntu': require('./assets/fonts/Ubuntu.ttf')
+//     // });
+//     // this.setState({fontLoaded: true})
+//   }
+//   render() {
+//     return (
+//       <Application />
+//     );
+//   }
+// }

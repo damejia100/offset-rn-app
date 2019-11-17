@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native';
-import axios from 'axios'
+import axios from 'axios';
+import { createAppContainer } from 'react-navigation';
 
 export default class Login extends React.Component {
 
@@ -25,58 +26,36 @@ export default class Login extends React.Component {
 
   componentDidMount() {
     this._loadingInitialState().done();
-
   }
 
   async  _loadingInitialState () {
-    const value = await AsyncStorage.getItem('user');
-    if (value !== null) {
-      this.props.navigation.navigate('Homescreen');
+    try {
+      const value = await AsyncStorage.getItem('email')
+      if(value !== null) {
+        this.props.navigation.navigate('Home');
+      }
+    } catch(err) {
+      console.log(err)
     }
   }
+
   async login (user) {
     try {
-      const {data} = await axios.post('http://127.0.0.1:3000/api/user/', user)
-      console.log('data returned from db>>>', data)
+      const {data} = await axios.post('http://localhost:3000/api/user/login', user)
 
-      // if (res.success === true) {
-      //   AsyncStorage.setItem('user', res.user);
-      //   this.props.navigation.navigate('Homescreen');
-      // }
-      // else {
-      //   alert(res.message);
-      // }
+      this.setState({data})
+
+      if (data !== null) {
+        await AsyncStorage.setItem('email', data.email);
+        this.props.navigation.navigate('Homescreen');
+      }
+      else {
+        alert(data);
+      }
 
     } catch (error) {
-      console.log('frontend login error>>>', error.message)
+      console.log('frontend login error>>>', error)
     }
-
-    // fetch('http://71.190.247.98:3000/users', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-    // })
-    // .then((response) => response.json())
-
-    // .then((res) => {
-
-    //   alert(res.message);
-
-    //   if (res.success === true) {
-    //     AsyncStorage.setItem('user', res.user);
-    //     this.props.navigation.navigate('Homescreen');
-    //   }
-    //   else {
-    //     alert(res.message);
-    //   }
-    // })
-    // .done();
   }
   render() {
     return (
@@ -84,22 +63,26 @@ export default class Login extends React.Component {
 
         <View style={styles.container}>
 
-          <Text style={styles.header}> Sign In </Text>
+          <Text style={styles.header}>Log into your account</Text>
 
             <TextInput
             style={styles.textInput}
             placeholder="Email"
+            autoCapitalize = 'none'
             onChangeText={ (email) => this.setState({email})}/>
 
             <TextInput
             style={styles.textInput}
             placeholder="Password"
+            autoCapitalize = 'none'
             onChangeText={ (password) => this.setState({password})}
             secureTextEntry={true}/>
 
           <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state)}>
-            <Text style={styles.btnText}>Sign In</Text>
+            <Text style={styles.btnText}>Log In</Text>
           </TouchableOpacity>
+
+          <Text style={styles.account}>Need an account? Sign up.</Text>
 
         </View>
 

@@ -1,8 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const pkg = require('./../../../package.json')
-
-const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
+const db = require('../db')
 
 const User = db.define('user', {
   firstName: {
@@ -70,4 +69,4 @@ User.beforeBulkCreate(users => {
   users.forEach(setSaltAndPassword)
 })
 
-module.exports = { db, User}
+module.exports = User;

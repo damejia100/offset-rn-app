@@ -9,6 +9,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import axios from 'axios'
+import { createAppContainer } from 'react-navigation';
 
 export default class SignUp extends React.Component {
 
@@ -26,11 +27,10 @@ export default class SignUp extends React.Component {
 
   componentDidMount() {
     this._loadingInitialState().done();
-
   }
 
   async  _loadingInitialState () {
-    const value = await AsyncStorage.getItem('user');
+    const value = await AsyncStorage.getItem('email');
     if (value !== null) {
       this.props.navigation.navigate('Homescreen');
     }
@@ -38,47 +38,21 @@ export default class SignUp extends React.Component {
 
   async signUp (user) {
     try {
-      const {data} = await axios.post('http://71.190.247.98:3000/api/user/', user)
+      const {data} = await axios.post('http://localhost:3000/api/user/signup', user)
+
       this.setState({data})
-      console.log('data returned from db>>>', data)
-      // if (res.success === true) {
-      //   AsyncStorage.setItem('user', res.user);
-      //   this.props.navigation.navigate('Homescreen');
-      // }
-      // else {
-      //   alert(res.message);
-      // }
+
+      if (data !== null) {
+        await AsyncStorage.setItem('email', data.email);
+        this.props.navigation.navigate('Homescreen');
+      }
+      else {
+        alert('Wrong username and/or password');
+      }
 
     } catch (error) {
       console.log('frontend login error>>>', error)
     }
-
-    // fetch('http://71.190.247.98:3000/users', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-    // })
-    // .then((response) => response.json())
-
-    // .then((res) => {
-
-    //   alert(res.message);
-
-    //   if (res.success === true) {
-    //     AsyncStorage.setItem('user', res.user);
-    //     this.props.navigation.navigate('Homescreen');
-    //   }
-    //   else {
-    //     alert(res.message);
-    //   }
-    // })
-    // .done();
   }
   render() {
     return (
@@ -86,27 +60,31 @@ export default class SignUp extends React.Component {
 
         <View style={styles.container}>
 
-          <Text style={styles.header}> Sign Up </Text>
+          <Text style={styles.header}>Create an account</Text>
 
             <TextInput
             style={styles.textInput}
             placeholder="First Name"
+            autoCapitalize = 'none'
             onChangeText={ (firstName) => this.setState({firstName})}/>
 
             <TextInput
             style={styles.textInput}
             placeholder="Email"
+            autoCapitalize = 'none'
             onChangeText={ (email) => this.setState({email})}/>
 
             <TextInput
             style={styles.textInput}
             placeholder="Password"
+            autoCapitalize = 'none'
             onChangeText={ (password) => this.setState({password})}
             secureTextEntry={true}/>
 
           <TouchableOpacity style={styles.button} onPress={()=>this.signUp(this.state)}>
-            <Text style={styles.btnText}>Sign In</Text>
+            <Text style={styles.btnText}>Sign up</Text>
           </TouchableOpacity>
+          <Text style={styles.account}>Have an account? Log in.</Text>
 
         </View>
 
