@@ -4,19 +4,43 @@ import {
   Text,
   View
 } from 'react-native';
+import axios from 'axios'
+import PlasticTracker from './plasticTracker';
+import ReusableTracker from './resusableTracker'
 
 export default class Homescreen extends React.Component {
   constructor(props){
     super(props)
-  }
-  componentDidMount() {
+    this.state = {
+      firstName: 'Marley',
+      plasticBottles: 0,
+      reusableBottles: 0,
+      offsetCount: 0
+    }
+
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.header}>Hi, {this.state.firstName} </Text>
+        <Text style={styles.text}>Your current offset is...</Text>
+        <Text style={styles.offsetCount}>{this.state.offsetCount}</Text>
+        <Text style={styles.LogText}>Log your plastic vs. resuable bottle usage:</Text>
 
-        <Text style={styles.header}> OFFSET </Text>
+        <View style={styles.logPlastic}>
+          <PlasticTracker
+          plasticBottles={this.state.plasticBottles}
+          offsetCount={this.state.offsetCount}
+          />
+        </View>
+
+        <View style={styles.logResuable}>
+          <ReusableTracker
+          reusableBottles={this.state.reusableBottles}
+          offsetCount={this.state.offsetCount}
+          />
+        </View>
 
       </View>
     );
@@ -27,13 +51,46 @@ export default class Homescreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'left',
     justifyContent: 'center',
-    backgroundColor: '#00c4cc'
+    backgroundColor: '#fff',
+    padding: 20
   },
   header: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 40,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Iowan Old Style',
+    paddingBottom: 20
+  },
+  text: {
+    color: '#000000',
+    fontSize: 20,
+    lineHeight: 30,
+    paddingBottom: 20
+  },
+  offsetCount: {
+    fontSize: 40,
+    color: '#00c4cc',
+    paddingBottom: 20
+  },
+  LogText: {
+    fontSize: 20,
+    color: '#666666',
+    lineHeight: 30,
+    paddingBottom: 20
+  },
+  logPlastic: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignContent: 'center',
+  },
+  logResuable: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignContent: 'center',
+
   }
 })

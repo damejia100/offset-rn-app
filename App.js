@@ -12,8 +12,8 @@ import Login from './app/components/Login';
 import SignUp from './app/components/SignUp';
 import Homescreen from './app/components/Homescreen';
 
-const AppContainer = createAppContainer(AppNavigator)
-const AppNavigator = createStackNavigator({
+// const AppContainer = createAppContainer(AppNavigator)
+const Application = createStackNavigator({
   Home: {
     screen: Homescreen,
   },
@@ -38,11 +38,43 @@ const bottomTabNavigator = createBottomTabNavigator(
 
 class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return <Application />;
   }
 }
 
 export default createAppContainer(bottomTabNavigator);
+
+// const AppContainer = createAppContainer(AppNavigator)
+// const AppNavigator = createStackNavigator({
+//   Home: {
+//     screen: Homescreen,
+//   },
+//   Login: {
+//     screen: Login,
+//   },
+//   SignUp: {
+//     screen: SignUp
+//   }
+// });
+
+// const bottomTabNavigator = createBottomTabNavigator(
+//   {
+//   Home: Homescreen,
+//   Login: Login,
+//   SignUp: SignUp
+//   },
+//   {
+//     initialRouteName: 'Home'
+//   }
+// )
+
+// class App extends React.Component {
+//   render() {
+//     return <AppContainer />;
+//   }
+// }
+
+// export default createAppContainer(bottomTabNavigator);
 
 // class App extends React.Component {
 
