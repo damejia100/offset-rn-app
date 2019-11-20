@@ -54,7 +54,7 @@ export default class Login extends React.Component {
       }
 
     } catch (error) {
-      console.log('frontend login error>>>', error)
+      console.log(error)
     }
   }
   render() {
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
     color: '#fff',
+    alignSelf: 'flex-start',
     paddingBottom: 10,
     marginBottom: 40,
     borderBottomColor: '#199187',
@@ -130,5 +131,8 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 20
+  },
+  account:  {
+    paddingTop: 10
   }
 })

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,9 +9,17 @@ import {
 export default class PlasticTracker extends React.Component {
   constructor(props){
     super(props)
+
+    // this.state = {
+    //   reusableBottles: this.props.reusableBottles,
+    //   offsetCount: this.props.offsetCount
+    // }
+
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
   }
+
+
 
   increase() {
     this.props.reusableBottles = this.props.reusableBottles + 1
@@ -27,15 +35,18 @@ export default class PlasticTracker extends React.Component {
     this.props.offsetCount = this.props.offsetCount - 1
     this.setState({
       reusableBottles: this.props.reusableBottles,
-      offsetCount: this.props.offsetCount
+      offsetCount: this.props.offsetCount - 1
     })
   }
 
 
   render() {
+    console.log('in reusable render', this.props)
     return (
       <View style={styles.logResuable}>
-          <TouchableOpacity style={styles.button} onPress={() => this.decrease()}>
+          <TouchableOpacity style={styles.button}
+          onPress={() => this.decrease()}
+          >
             <Text style={styles.btnText}> - </Text>
           </TouchableOpacity>
 
@@ -49,8 +60,6 @@ export default class PlasticTracker extends React.Component {
           </TouchableOpacity>
 
         </View>
-
-
     );
   }
 

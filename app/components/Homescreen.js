@@ -4,7 +4,6 @@ import {
   Text,
   View
 } from 'react-native';
-import axios from 'axios'
 import PlasticTracker from './plasticTracker';
 import ReusableTracker from './resusableTracker'
 
@@ -17,7 +16,6 @@ export default class Homescreen extends React.Component {
       reusableBottles: 0,
       offsetCount: 0
     }
-
   }
 
   render() {
@@ -54,13 +52,12 @@ const styles = StyleSheet.create({
     alignItems: 'left',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    padding: 20
+    padding: 20,
   },
   header: {
     color: '#000000',
     fontSize: 40,
     fontWeight: 'bold',
-    fontFamily: 'Iowan Old Style',
     paddingBottom: 20
   },
   text: {
@@ -72,7 +69,8 @@ const styles = StyleSheet.create({
   offsetCount: {
     fontSize: 40,
     color: '#00c4cc',
-    paddingBottom: 20
+    paddingBottom: 20,
+    fontWeight: 'bold'
   },
   LogText: {
     fontSize: 20,

@@ -32,6 +32,7 @@ export default class PlasticTracker extends React.Component {
   }
 
   render() {
+    console.log('in plasic render', this.props)
     return (
       <View style={styles.logPlastic}>
         <TouchableOpacity style={styles.button} onPress={() =>  this.decrease()}>
