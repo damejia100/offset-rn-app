@@ -12,8 +12,6 @@ const app = express()
 const socketio = require('socket.io')
 module.exports = app
 
-// if (process.env.NODE_ENV !== 'production') require('../secrets')
-
 passport.serializeUser((user, done) => done(null, user.id))
 
 passport.deserializeUser(async (id, done) => {

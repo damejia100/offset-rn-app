@@ -9,12 +9,6 @@ import {
 export default class PlasticTracker extends React.Component {
   constructor(props){
     super(props)
-
-    // this.state = {
-    //   reusableBottles: this.props.reusableBottles,
-    //   offsetCount: this.props.offsetCount
-    // }
-
     this.increase = this.increase.bind(this)
     this.decrease = this.decrease.bind(this)
   }

@@ -25,12 +25,13 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/signup', async (req, res, next) => {
+  console.log('req.body in user.js>>', req.body)
   try {
     const newUser = await User.create(req.body)
     console.log('newUser>>> in db', newUser)
-    req.login(newUser, err => (err ? next(err) : res.json(newUser)))
+    // req.login(newUser, err => (err ? next(err) : res.json(newUser)))
   } catch (err) {
-    console.error(err)
+    console.error('/signup post error>>', err)
     next(err)
   }
 })

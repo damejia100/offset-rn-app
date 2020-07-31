@@ -24,7 +24,7 @@ export default class Homescreen extends React.Component {
         <Text style={styles.header}>Hi, {this.state.firstName} </Text>
         <Text style={styles.text}>Your current offset is...</Text>
         <Text style={styles.offsetCount}>{this.state.offsetCount}</Text>
-        <Text style={styles.LogText}>Log your plastic vs. resuable bottle usage:</Text>
+        <Text style={styles.LogText}>Log plastic vs. resuable bottle usage:</Text>
 
         <View style={styles.logPlastic}>
           <PlasticTracker

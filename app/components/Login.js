@@ -40,8 +40,10 @@ export default class Login extends React.Component {
   }
 
   async login (user) {
+    console.log('user in Login.js>>>', user)
     try {
       const {data} = await axios.post('http://localhost:3000/api/user/login', user)
+      console.log('data in Login.js>>>', data)
 
       this.setState({data})
 
