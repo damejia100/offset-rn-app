@@ -23,11 +23,8 @@ export default class SignUp extends React.Component {
   }
 
   async signUp (user) {
-    console.log('user in signUp.js>>>', user)
     try {
       const {data} = await axios.post('http://localhost:3000/api/user/signup', user)
-
-      console.log('data returned in SignUp.js>>>', data)
 
       this.setState({data})
 
