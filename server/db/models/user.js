@@ -31,6 +31,12 @@ const User = db.define('user', {
     get() {
       return () => this.getDataValue('salt')
     }
+  },
+  plasticCount: {
+    type: Sequelize.STRING
+  },
+  reusableCount: {
+    type: Sequelize.STRING
   }
 })
 

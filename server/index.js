@@ -10,7 +10,6 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
-module.exports = app
 
 passport.serializeUser((user, done) => done(null, user.id))
 
@@ -45,16 +44,6 @@ const createApp = () => {
   app.use('/api', require('./api'))
 
   app.use(express.static(path.join(__dirname, '..', 'public')))
-
-  // app.use((req, res, next) => {
-  //   if (path.extname(req.path).length) {
-  //     const err = new Error('Not found')
-  //     err.status = 404
-  //     next(err)
-  //   } else {
-  //     next()
-  //   }
-  // })
 
   app.use((err, req, res, next) => {
     console.error(err)
@@ -133,4 +122,4 @@ if (require.main === module) {
 //   res.status(err.status || 500).send(err.message || 'Internal server error.')
 // })
 
-// module.exports = app;
+module.exports = app;

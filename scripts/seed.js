@@ -1,5 +1,5 @@
 'use strict'
-const { User, db } = require('../server/db/models/user')
+const { User, db } = require('../server/db')
 
 async function seed() {
 
@@ -11,22 +11,30 @@ async function seed() {
     User.create({
       firstName: 'Cody',
       email: 'cody@email.com',
-      password: '123'
+      password: '123',
+      plasticCount: '0',
+      reusableCount: '0'
     }),
     User.create({
       firstName: 'Marley',
       email: 'marley@email.com',
-      password: '123'
+      password: '123',
+      plasticCount: '0',
+      reusableCount: '0'
     }),
     User.create({
       firstName: 'Gia',
       email: 'gia@email.com',
-      password: '123'
+      password: '123',
+      plasticCount: '0',
+      reusableCount: '0'
     }),
     User.create({
       firstName: 'Brian',
       email: 'brian@email.com',
-      password: '123'
+      password: '123',
+      plasticCount: '0',
+      reusableCount: '0'
     })
   ])
 
