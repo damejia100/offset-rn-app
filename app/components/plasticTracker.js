@@ -5,6 +5,8 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux'
+
 
 export default class PlasticTracker extends React.Component {
   constructor(props){
@@ -73,8 +75,7 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 25,
-    backgroundColor: '#d63838',
-    borderRadius: '50%'
+    backgroundColor: '#d63838'
   },
   btnText: {
     color: '#fff',

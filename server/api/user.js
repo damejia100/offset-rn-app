@@ -35,3 +35,21 @@ router.post('/signup', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/api/user/plastic', async (req, res, next) => {
+  try {
+    const plasticCount = await User.get
+  } catch (error) {
+    console.error('/plastic get error>>', err)
+    next(err)
+  }
+})
+
+router.get('/api/user/reusable', async (req, res, next) => {
+  try {
+
+  } catch (error) {
+    console.error('/reusable get error>>', err)
+    next(err)
+  }
+})

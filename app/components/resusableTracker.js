@@ -56,7 +56,6 @@ export default class PlasticTracker extends React.Component {
         </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -75,8 +74,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#00c4cc',
-    borderRadius: '50%',
-    padding: 25,
+    padding: 25
   },
   btnText: {
     color: '#fff',

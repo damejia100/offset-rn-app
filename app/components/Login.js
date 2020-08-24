@@ -9,7 +9,6 @@ import {
   AsyncStorage
 } from 'react-native';
 import axios from 'axios';
-import { createAppContainer } from 'react-navigation';
 
 export default class Login extends React.Component {
 

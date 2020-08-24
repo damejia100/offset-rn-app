@@ -4,52 +4,44 @@ import {
   Text,
   View
 } from 'react-native';
+import {connect} from 'react-redux'
 import PlasticTracker from './plasticTracker';
-import ReusableTracker from './resusableTracker'
+import ReusableTracker from './resusableTracker';
+import { getPlasticCount, getReusableCount } from '../reducers/index';
 
-export default class Homescreen extends React.Component {
+class Homescreen extends React.Component {
   constructor(props){
     super(props)
-    this.state = {
-      firstName: 'Marley',
-      plasticBottles: 0,
-      reusableBottles: 0,
-      offsetCount: 0
-    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Hi, {this.state.firstName} </Text>
+        <Text style={styles.header}>Hi, Marley!</Text>
         <Text style={styles.text}>Your current offset is...</Text>
         <Text style={styles.offsetCount}>{this.state.offsetCount}</Text>
         <Text style={styles.LogText}>Log plastic vs. resuable bottle usage:</Text>
 
         <View style={styles.logPlastic}>
           <PlasticTracker
-          plasticBottles={this.state.plasticBottles}
-          offsetCount={this.state.offsetCount}
+          plasticBottles={this.props.totalPlastic}
           />
         </View>
 
         <View style={styles.logResuable}>
           <ReusableTracker
-          reusableBottles={this.state.reusableBottles}
-          offsetCount={this.state.offsetCount}
+          reusableBottles={this.props.totalReusale}
           />
         </View>
 
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'left',
     justifyContent: 'center',
     backgroundColor: '#fff',
     padding: 20,
@@ -89,6 +81,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     alignContent: 'center',
-
   }
 })
+const mapStateToProps = state => ({
+  totalPlastic: state.totalPlastic,
+  totalReusale: state.totalReusale,
+  offsetCount: state.offsetCount
+})
+
+const mapDispatchToProps = dispatch => ({
+  getPlasticCount: () => dispatch(getPlasticCount()),
+  getReusableCount: () => dispatch(getReusableCount())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Homescreen);

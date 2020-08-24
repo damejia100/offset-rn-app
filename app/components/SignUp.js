@@ -9,7 +9,6 @@ import {
   AsyncStorage
 } from 'react-native';
 import axios from 'axios'
-// import { createAppContainer } from 'react-navigation';
 
 export default class SignUp extends React.Component {
 
@@ -21,20 +20,7 @@ export default class SignUp extends React.Component {
       password: ''
     }
     this.signUp = this.signUp.bind(this)
-    // this._loadingInitialState = this._loadingInitialState.bind(this)
   }
-
-  // componentDidMount() {
-  //   this._loadingInitialState().done();
-  // }
-
-  // async  _loadingInitialState () {
-  //   const value = await AsyncStorage.getItem('email');
-  //   console.log('value in signUp.js>>>', value)
-  //   if (value !== null) {
-  //     this.props.navigation.navigate('Homescreen');
-  //   }
-  // }
 
   async signUp (user) {
     console.log('user in signUp.js>>>', user)
