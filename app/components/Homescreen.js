@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux'
 import PlasticTracker from './plasticTracker';
-import ReusableTracker from './resusableTracker';
+import ReusableTracker from './resusableTracker'
 import { getPlasticCount, getReusableCount } from '../reducers/index';
 
 class Homescreen extends React.Component {
@@ -15,23 +15,20 @@ class Homescreen extends React.Component {
   }
 
   render() {
+    const { totalPlastic, totalReusable, offsetCount } = this.props
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Hi, Marley!</Text>
         <Text style={styles.text}>Your current offset is...</Text>
-        <Text style={styles.offsetCount}>{this.state.offsetCount}</Text>
+        <Text style={styles.offsetCount}>{offsetCount}</Text>
         <Text style={styles.LogText}>Log plastic vs. resuable bottle usage:</Text>
 
         <View style={styles.logPlastic}>
-          <PlasticTracker
-          plasticBottles={this.props.totalPlastic}
-          />
+          <PlasticTracker totalPlastic={totalPlastic}/>
         </View>
 
         <View style={styles.logResuable}>
-          <ReusableTracker
-          reusableBottles={this.props.totalReusale}
-          />
+          <ReusableTracker totalReusable={totalReusable}/>
         </View>
 
       </View>
@@ -83,9 +80,10 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   }
 })
+
 const mapStateToProps = state => ({
   totalPlastic: state.totalPlastic,
-  totalReusale: state.totalReusale,
+  totalReusable: state.totalReusable,
   offsetCount: state.offsetCount
 })
 

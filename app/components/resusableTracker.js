@@ -1,58 +1,35 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux'
+import { addedReusable, subtractedReusable } from '../reducers/index';
 
-export default class PlasticTracker extends React.Component {
+class ReusableTracker extends React.Component {
   constructor(props){
     super(props)
-    this.increase = this.increase.bind(this)
-    this.decrease = this.decrease.bind(this)
   }
-
-
-
-  increase() {
-    this.props.reusableBottles = this.props.reusableBottles + 1
-    this.props.offsetCount = this.props.offsetCount + 1
-    this.setState({
-      reusableBottles: this.props.reusableBottles,
-      offsetCount: this.props.offsetCount
-    })
-  }
-
-  decrease() {
-    this.props.reusableBottles = this.props.reusableBottles - 1
-    this.props.offsetCount = this.props.offsetCount - 1
-    this.setState({
-      reusableBottles: this.props.reusableBottles,
-      offsetCount: this.props.offsetCount - 1
-    })
-  }
-
 
   render() {
-    console.log('in reusable render', this.props)
+    const { addedReusable, subtractedReusable, totalReusable } = this.props
+
     return (
       <View style={styles.logResuable}>
-          <TouchableOpacity style={styles.button}
-          onPress={() => this.decrease()}
-          >
+          <TouchableOpacity style={styles.button} onPress={() => subtractedReusable()}>
             <Text style={styles.btnText}> - </Text>
           </TouchableOpacity>
 
           <View style={styles.log}>
-            <Text style={styles.logCount}> {this.props.reusableBottles} </Text>
+            <Text style={styles.logCount}> {totalReusable} </Text>
             <Text style={styles.logTypeText}>reusable bottle</Text>
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={() => this.increase()}>
+          <TouchableOpacity style={styles.button} onPress={() => addedReusable()}>
             <Text style={styles.btnText}> + </Text>
           </TouchableOpacity>
-
         </View>
     );
   }
@@ -92,3 +69,12 @@ const styles = StyleSheet.create({
     fontSize: 14
   }
 })
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addedReusable: () => dispatch(addedReusable()),
+    subtractedReusable: () => dispatch(subtractedReusable())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(ReusableTracker);

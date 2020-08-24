@@ -6,53 +6,32 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux'
+import { addedPlastic, subtractedPlastic} from '../reducers/index';
 
 
-export default class PlasticTracker extends React.Component {
+class PlasticTracker extends React.Component {
   constructor(props){
     super(props)
-    this.increase = this.increase.bind(this)
-    this.decrease = this.decrease.bind(this)
-  }
-
-  increase() {
-    this.props.plasticBottles = this.props.plasticBottles + 1
-    this.props.offsetCount = this.props.offsetCount - 1
-    this.setState({
-      plasticBottles: this.props.plasticBottles,
-      offsetCount: this.props.offsetCount
-    })
-  }
-
-  decrease() {
-    this.props.plasticBottles = this.props.plasticBottles - 1
-    this.props.offsetCount = this.props.offsetCount + 1
-    this.setState({
-      plasticBottles: this.props.plasticBottles,
-      offsetCount: this.props.offsetCount
-    })
   }
 
   render() {
-    console.log('in plasic render', this.props)
+    const { addedPlastic, subtractedPlastic, totalPlastic } = this.props
+
     return (
       <View style={styles.logPlastic}>
-        <TouchableOpacity style={styles.button} onPress={() =>  this.decrease()}>
+        <TouchableOpacity style={styles.button} onPress={() => subtractedPlastic()}>
           <Text style={styles.btnText}> - </Text>
         </TouchableOpacity>
 
           <View style={styles.log}>
-            <Text style={styles.logCount}> {this.props.plasticBottles} </Text>
+            <Text style={styles.logCount}> {totalPlastic} </Text>
             <Text style={styles.logTypeText}>plastic bottle</Text>
           </View>
 
-          <TouchableOpacity style={styles.button}
-          onPress={() => this.increase()}>
+          <TouchableOpacity style={styles.button} onPress={() => addedPlastic()}>
             <Text style={styles.btnText}> + </Text>
           </TouchableOpacity>
-
         </View>
-
     );
   }
 
@@ -93,3 +72,12 @@ const styles = StyleSheet.create({
     fontSize: 14
   }
 })
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addedPlastic: () => dispatch(addedPlastic()),
+    subtractedPlastic: () => dispatch(subtractedPlastic())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PlasticTracker);

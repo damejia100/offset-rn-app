@@ -7,11 +7,12 @@ const ADD_PLASTIC = 'ADD_PLASTIC'
 const ADD_REUSABLE = 'ADD_REUSABLE'
 const SUBTRACT_PLASTIC = 'SUBTRACT_PLASTIC'
 const SUBTRACT_REUSABLE = 'SUBTRACT_REUSABLE'
+const GET_OFFSET_COUNT = 'GET_OFFSET_COUNT'
 
 //INITIAL STATE
 export const initialState  = {
   totalPlastic: 0,
-  totalReusale: 0,
+  totalReusable: 0,
   offsetCount: 0
 }
 
@@ -26,18 +27,28 @@ export const gotReusable = reusable => ({
   reusable
 })
 
-export const addedPlastic = plastic => ({
-  type: ADD_PLASTIC,
-  plastic
+export const addedPlastic = () => ({
+  type: ADD_PLASTIC
 })
 
-export const addedReusable = reusable => ({
-  type: ADD_REUSABLE,
-  reusable
+export const addedReusable = () => ({
+  type: ADD_REUSABLE
+})
+
+export const subtractedPlastic = () => ({
+  type: SUBTRACT_PLASTIC
+})
+
+export const subtractedReusable = () => ({
+  type: SUBTRACT_REUSABLE
+})
+
+export const gotOffsetCount = () => ({
+  type: GET_OFFSET_COUNT
 })
 
 //THUNKS
-export const getPlasticCount = () => async dispatch => {
+export const getOffsetCount = () => async dispatch => {
   try {
     const {data} = await axios.get('api/user/plastic')
     dispatch(gotPlastic(data))
@@ -47,20 +58,30 @@ export const getPlasticCount = () => async dispatch => {
   }
 }
 
-export const getReusableCount = () => async dispatch => {
-  try {
-    const {data} = await axios.get('api/user/reusable')
-    dispatch(gotReusable(data))
-  }
-  catch (error) {
-    console.error(error)
-  }
-}
+// export const getPlasticCount = () => async dispatch => {
+//   try {
+//     const {data} = await axios.get('api/user/plastic')
+//     dispatch(gotPlastic(data))
+//   }
+//   catch (error) {
+//     console.error(error)
+//   }
+// }
+
+// export const getReusableCount = () => async dispatch => {
+//   try {
+//     const {data} = await axios.get('api/user/reusable')
+//     dispatch(gotReusable(data))
+//   }
+//   catch (error) {
+//     console.error(error)
+//   }
+// }
 
 //REDUCER
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_ALL_RESUABLE:
+    case GOT_ALL_PLASTIC:
       return {
         ...state,
         totalPlastic: action.totalPlastic
@@ -68,26 +89,36 @@ export const rootReducer = (state = initialState, action) => {
     case GOT_ALL_RESUABLE:
       return {
         ...state,
-        totalReusale: action.totalReusale
+        totalReusable: action.totalReusable
       }
     case ADD_PLASTIC:
       return {
-        totalPlastic: + 1
+        ...state,
+        totalPlastic: state.totalPlastic + 1,
+        offsetCount: state.offsetCount + 1
       }
     case ADD_REUSABLE:
       return {
         ...state,
-        totalReusale: totalReusale + 1
+        totalReusable: state.totalReusable + 1,
+        offsetCount: state.offsetCount - 1
       }
     case SUBTRACT_PLASTIC:
       return {
-        totalPlastic: - 1
+        ...state,
+        totalPlastic: state.totalPlastic - 1,
+        offsetCount: state.offsetCount - 1
       }
     case SUBTRACT_REUSABLE:
       return {
         ...state,
-        totalReusale: totalReusale - 1
+        totalReusable: state.totalReusable - 1
       }
+    case GET_OFFSET_COUNT:
+    return {
+      ...state,
+      offsetCount: Math.abs(state.totalPlastic - state.totalReusable)
+    }
     default:
       return state
   }
